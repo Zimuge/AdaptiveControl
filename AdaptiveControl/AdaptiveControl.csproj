@@ -81,7 +81,9 @@
     <Compile Include="AdaptiveControl.Designer.cs">
       <DependentUpon>AdaptiveControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="AdaptivePid.cs" />
     <Compile Include="ControlAlgorithm.cs" />
+    <Compile Include="FuzzyPid.cs" />
     <Compile Include="PIDController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

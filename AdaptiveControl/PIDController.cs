@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Diagnostics;
 
 namespace AdaptiveControl
 {
@@ -21,28 +22,32 @@ namespace AdaptiveControl
         double Error_K_1;
         double Error_K_2;
         double ControlU = 0;
+        double outputU = 0;
 
 
 
         /********************************************
                        member function
         *********************************************/
-        public PidController(double T, double SetValue,
+        public PidController(double period, double setValue,
             System.Windows.Forms.DataVisualization.Charting.Chart paraChart,
             System.Windows.Forms.DataVisualization.Charting.Chart controlChart,
             System.Windows.Forms.DataGridView  paraGridView,
             System.Windows.Forms.DataGridView dataGridView)
         {
-            base.T = T;
-            base.r = SetValue;
+            
             Error_K = 0;
             Error_K_1 = 0;
             Error_K_2 = 0;
             Kp = 1.2; Ti = 80; Td = 10;
+
             base.paraChart = paraChart;
             dataChart = controlChart;
             paraTable = paraGridView;
             dataTable = dataGridView;
+
+            base.T = period;
+            base.r = setValue;
             bgTime = DateTime.Now;
             spantime = 0;
             error = 0;
@@ -52,6 +57,8 @@ namespace AdaptiveControl
             initTable();
             
         }
+
+
         public double getControlValue()
         {
             double u = ControlU;
@@ -78,36 +85,10 @@ namespace AdaptiveControl
         //
         // according to the para to change the Aixs range
         //
-        private void setParaChartAxisY(double para)
-        {
-            double oldMax = paraChart.ChartAreas[0].AxisY.Maximum;
-            double oldMin = paraChart.ChartAreas[0].AxisY.Minimum;
-            if (oldMax <= para)
-            {
-                paraChart.ChartAreas[0].AxisY.Maximum = oldMax + 50;
-            }
-            if (oldMin >= para)
-            {
-                paraChart.ChartAreas[0].AxisY.Maximum = oldMin - 50;
-            }
-
-        }
+     
        
 
-        private void setDataChartAxisY(double data)
-        {
-            double oldMax = dataChart.ChartAreas[0].AxisY.Maximum;
-            double oldMin = dataChart.ChartAreas[0].AxisY.Minimum;
-            if (oldMax <= data)
-            {
-                dataChart.ChartAreas[0].AxisY.Maximum = oldMax + 50;
-            }
-            if (oldMin >= data)
-            {
-                dataChart.ChartAreas[0].AxisY.Maximum = oldMin - 50;
-            }
-
-        }
+       
 
         /********************************************
                     interface
@@ -116,12 +97,20 @@ namespace AdaptiveControl
         //
         // get the control value
         //
-        public override double controller(double r, double y)
+        public override double controller()
         {
-            base.r = r;
-            base.y = y;
             ControlU = getControlValue();
-            return ControlU;
+            outputU = ControlU;
+            if(outputU >= 100)
+            {
+                outputU = 100;
+            }
+
+            if (outputU <= 0)
+            {
+                outputU = 0;
+            }
+            return outputU;
         }
 
 
@@ -144,7 +133,7 @@ namespace AdaptiveControl
             {
                 paraChart.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series());// add series
                 paraChart.Series[i].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;// set the series type,pie or bar and etc
-                paraChart.Series[i].BorderWidth = 1;// set the line width
+                paraChart.Series[i].BorderWidth = 2;// set the line width
             }
 
             paraChart.Series[0].LegendText = "Kp";
@@ -158,7 +147,7 @@ namespace AdaptiveControl
             {
                 dataChart.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series());// add series
                 dataChart.Series[i].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;// set the series type,pie or bar and etc
-                dataChart.Series[i].BorderWidth = 1;// set the line width
+                dataChart.Series[i].BorderWidth = 2;// set the line width
             }
 
             dataChart.Series[0].LegendText = "setValue/r";
@@ -166,13 +155,15 @@ namespace AdaptiveControl
             dataChart.Series[2].LegendText = "controlValue/u";
 
 
-            paraChart.ChartAreas[0].AxisX.Maximum = 100;
+            paraChart.ChartAreas[0].AxisX.Maximum = 60;
             paraChart.ChartAreas[0].AxisX.Minimum = 0;
-            paraChart.ChartAreas[0].AxisY.Maximum = 100;
-            paraChart.ChartAreas[0].AxisY.Minimum = -50;
 
-            dataChart.ChartAreas[0].AxisX.Maximum = 100;
+            paraChart.ChartAreas[0].AxisY.Maximum = 100;
+            paraChart.ChartAreas[0].AxisY.Minimum = -20;
+
+            dataChart.ChartAreas[0].AxisX.Maximum = 60;
             dataChart.ChartAreas[0].AxisX.Minimum = 0;
+
             dataChart.ChartAreas[0].AxisY.Maximum = 100;
             dataChart.ChartAreas[0].AxisY.Minimum = 0;
 
@@ -217,22 +208,25 @@ namespace AdaptiveControl
         public override void drawData()
         {
             //
-            // draw setValue
+            // dranw setValue
             //
-            setDataChartAxisY(Math.Round(r, 4));
-            dataChart.Series[0].Points.Add(Math.Round(spantime - T, 4), Math.Round(r,4));
+                Debug.WriteLine($"{r}  #{y}  #{outputU} \n spantime{spantime} ");
 
-            //
-            // draw output value
-            //
-            setDataChartAxisY(Math.Round(y, 4));
-            dataChart.Series[1].Points.Add(Math.Round(spantime - T, 4), Math.Round(y, 4));
+                
+                setDataChartAxisY(Math.Round(r, 4));
+                dataChart.Series[0].Points.Add(new DataPoint(Math.Round(spantime, 4),Math.Round(r, 4)));
 
-            //
-            // draw control value
-            //
-            setDataChartAxisY(Math.Round(ControlU, 4));
-            dataChart.Series[2].Points.Add(Math.Round(spantime - T, 4), Math.Round(ControlU, 4));
+                //
+                // draw output value
+                //
+                setDataChartAxisY(Math.Round(y, 4));
+                dataChart.Series[1].Points.Add(new DataPoint(Math.Round(spantime, 4),Math.Round(y, 4)));
+
+                //
+                // draw control value
+                //
+                setDataChartAxisY(Math.Round(outputU, 4));
+                dataChart.Series[2].Points.Add(new DataPoint(Math.Round(spantime, 4),Math.Round(outputU, 4)));
          }
 
         //
@@ -240,14 +234,15 @@ namespace AdaptiveControl
         //
         public override void drawParameters()
         {
+            
             setParaChartAxisY(Math.Round(Kp,4));
-            paraChart.Series[0].Points.Add(Math.Round(spantime - T, 4), Math.Round(Kp, 4));// draw Kp
+            paraChart.Series[0].Points.Add(new DataPoint(Math.Round(spantime, 4), Math.Round(Kp, 4) ));// draw Kp
 
             setParaChartAxisY(Math.Round(Ti, 4));
-            paraChart.Series[1].Points.Add(Math.Round(spantime - T, 4), Math.Round(Ti, 4));// draw Ti
+            paraChart.Series[1].Points.Add(new DataPoint(Math.Round(spantime, 4),Math.Round(Ti, 4)) );// draw Ti
 
             setParaChartAxisY(Math.Round(Td, 4));
-            paraChart.Series[2].Points.Add(Math.Round(spantime - T, 4), Math.Round(Td, 4));// draw Td
+            paraChart.Series[2].Points.Add(new DataPoint(Math.Round(spantime, 4),Math.Round(Td, 4)));// draw Td
         }
 
         //
@@ -256,7 +251,7 @@ namespace AdaptiveControl
         public override void showData()
         {
             dataTable.Rows[0].Cells[0].Value = Math.Round(T, 4);// show control period
-            dataTable.Rows[0].Cells[1].Value = Math.Round(ControlU, 4);// show ControlU
+            dataTable.Rows[0].Cells[1].Value = Math.Round(outputU, 4);// show ControlU
             dataTable.Rows[0].Cells[2].Value = Math.Round(y, 4);// show output value
 
             error = System.Math.Abs(r - y) / (r);// calculate error
@@ -287,6 +282,18 @@ namespace AdaptiveControl
             paraTable.Rows[0].Cells[1].Value = Math.Round(Ti, 4);// show Ti
             paraTable.Rows[0].Cells[2].Value = Math.Round(Td, 4);// show Td
         }
+
+        //
+        // when the start button is cliked ,this function is called
+        //
+      
+
+        //
+        //timer interrupt function
+        
+
+        
     }
+
     
 }

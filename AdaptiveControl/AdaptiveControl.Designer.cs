@@ -28,12 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdaptiveControl));
             this.appName = new System.Windows.Forms.Label();
             this.myInfo = new System.Windows.Forms.Label();
@@ -47,17 +49,17 @@
             this.setBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.comboBoxAlgor = new System.Windows.Forms.ComboBox();
-            this.controlChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.paraChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.paraDataGridView = new System.Windows.Forms.DataGridView();
             this.controlDataGridView = new System.Windows.Forms.DataGridView();
+            this.controlChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.paraChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.groupBoxConrolPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.controlChart)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.paraChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.paraDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.controlDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.controlChart)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.paraChart)).BeginInit();
             this.SuspendLayout();
             // 
             // appName
@@ -155,6 +157,7 @@
             this.buttonStart.TabIndex = 0;
             this.buttonStart.Text = "运行";
             this.buttonStart.UseVisualStyleBackColor = true;
+            this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
             // 
             // setBox
             // 
@@ -182,57 +185,17 @@
             this.comboBoxAlgor.FormattingEnabled = true;
             this.comboBoxAlgor.Items.AddRange(new object[] {
             "PID控制",
+            "自校正PID控制",
             "模糊控制PID控制",
-            "加权最小方差控制",
             "极点配置自校正控制",
-            "自校正PID控制"});
+            "加权最小方差控制",
+            ""});
             this.comboBoxAlgor.Location = new System.Drawing.Point(80, 161);
             this.comboBoxAlgor.Margin = new System.Windows.Forms.Padding(4);
             this.comboBoxAlgor.Name = "comboBoxAlgor";
             this.comboBoxAlgor.Size = new System.Drawing.Size(172, 24);
             this.comboBoxAlgor.TabIndex = 1;
-            // 
-            // controlChart
-            // 
-            chartArea1.AxisX.Interval = 10D;
-            chartArea1.AxisX.MajorGrid.Enabled = false;
-            chartArea1.AxisX.Maximum = 100D;
-            chartArea1.AxisX.Minimum = 0D;
-            chartArea1.AxisX.Title = "时间";
-            chartArea1.AxisY.Interval = 20D;
-            chartArea1.AxisY.Maximum = 100D;
-            chartArea1.AxisY.Minimum = 0D;
-            chartArea1.Name = "ChartArea1";
-            this.controlChart.ChartAreas.Add(chartArea1);
-            this.controlChart.DataSource = this.paraChart.Titles;
-            legend2.Name = "Legend1";
-            this.controlChart.Legends.Add(legend2);
-            this.controlChart.Location = new System.Drawing.Point(15, 84);
-            this.controlChart.Name = "controlChart";
-            this.controlChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
-            this.controlChart.Size = new System.Drawing.Size(583, 300);
-            this.controlChart.TabIndex = 11;
-            this.controlChart.Text = "chart1";
-            // 
-            // paraChart
-            // 
-            chartArea2.AxisX.Interval = 10D;
-            chartArea2.AxisX.MajorGrid.Enabled = false;
-            chartArea2.AxisX.Maximum = 100D;
-            chartArea2.AxisX.Minimum = 0D;
-            chartArea2.AxisX.Title = "时间";
-            chartArea2.AxisY.Interval = 20D;
-            chartArea2.AxisY.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Stacked;
-            chartArea2.Name = "ChartArea1";
-            this.paraChart.ChartAreas.Add(chartArea2);
-            legend1.Name = "Legend1";
-            this.paraChart.Legends.Add(legend1);
-            this.paraChart.Location = new System.Drawing.Point(12, 426);
-            this.paraChart.Name = "paraChart";
-            this.paraChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SemiTransparent;
-            this.paraChart.Size = new System.Drawing.Size(586, 300);
-            this.paraChart.TabIndex = 12;
-            this.paraChart.Text = "chart1";
+            this.comboBoxAlgor.SelectedIndexChanged += new System.EventHandler(this.comboBoxAlgor_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -299,18 +262,54 @@
             this.controlDataGridView.Size = new System.Drawing.Size(480, 71);
             this.controlDataGridView.TabIndex = 19;
             // 
+            // controlChart
+            // 
+            chartArea1.AxisX.MajorGrid.Enabled = false;
+            chartArea1.Name = "ChartArea1";
+            this.controlChart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.controlChart.Legends.Add(legend1);
+            this.controlChart.Location = new System.Drawing.Point(12, 84);
+            this.controlChart.Name = "controlChart";
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.controlChart.Series.Add(series1);
+            this.controlChart.Size = new System.Drawing.Size(574, 289);
+            this.controlChart.TabIndex = 20;
+            this.controlChart.Text = "chart1";
+            // 
+            // paraChart
+            // 
+            chartArea2.AxisX.MajorGrid.Enabled = false;
+            chartArea2.Name = "ChartArea1";
+            this.paraChart.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.paraChart.Legends.Add(legend2);
+            this.paraChart.Location = new System.Drawing.Point(12, 426);
+            this.paraChart.Name = "paraChart";
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.paraChart.Series.Add(series2);
+            this.paraChart.Size = new System.Drawing.Size(574, 295);
+            this.paraChart.TabIndex = 21;
+            this.paraChart.Text = "chart1";
+            // 
             // AdaptiveControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1095, 733);
+            this.Controls.Add(this.paraChart);
+            this.Controls.Add(this.controlChart);
             this.Controls.Add(this.controlDataGridView);
             this.Controls.Add(this.paraDataGridView);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.paraChart);
-            this.Controls.Add(this.controlChart);
             this.Controls.Add(this.groupBoxConrolPanel);
             this.Controls.Add(this.paraChartTitle);
             this.Controls.Add(this.controlChartTitle);
@@ -325,10 +324,10 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AdaptiveControl_FormClosing);
             this.groupBoxConrolPanel.ResumeLayout(false);
             this.groupBoxConrolPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.controlChart)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.paraChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.paraDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.controlDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.controlChart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.paraChart)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -349,13 +348,13 @@
         private System.Windows.Forms.TextBox setBox;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox comboBoxAlgor;// the box to select algorithm
-        private System.Windows.Forms.DataVisualization.Charting.Chart controlChart;// the control chart
-        private System.Windows.Forms.DataVisualization.Charting.Chart paraChart;// the parameters chart
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private ControlAlgorithm controlAlgorithm;
         private System.Windows.Forms.DataGridView paraDataGridView;
         private System.Windows.Forms.DataGridView controlDataGridView;
+        private System.Windows.Forms.DataVisualization.Charting.Chart controlChart;
+        private System.Windows.Forms.DataVisualization.Charting.Chart paraChart;
     }
 }
 
