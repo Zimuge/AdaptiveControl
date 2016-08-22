@@ -130,6 +130,14 @@ namespace AdaptiveControl
                         paraChart, controlChart, paraDataGridView, controlDataGridView);
                         break;
                     }
+                case 3:
+                    {
+                        this.buttonStart.Enabled = true;
+                        controlAlgorithm = new PpstcControl(5.68, 100,
+                        paraChart, controlChart, paraDataGridView, controlDataGridView);
+                        break;
+       
+                    }
             
                 default:
                 {

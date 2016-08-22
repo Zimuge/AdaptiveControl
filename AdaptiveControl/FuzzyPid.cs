@@ -71,10 +71,10 @@ namespace AdaptiveControl
         {0, -2, -2, -1, -1, -1, -1, -2, -2, -2, -2, -2, -2, -3},
         {0, -2, -2, -2, -2, -1, -1, -3, -3, -3, -3, -3, -3, -4}};
         double ek, ek_1, ek_2;
-        int E, EC, U;
+        int E, EC;//, U;
         double Ke, eh, el, Kec, eck, ech, ecl, Ku, uh, ul, kph, kpl, kih, kil, kki, kdh, kdl, kkd, kkp;
-        double Kp, Ti, Td, T, I, Ki, Kd;
-        double PIDU;
+        double Kp,   I, Ki, Kd;//Td,Ti,T,
+                               //  double PIDU;
         double controlU;
         double outputU;
 
@@ -93,10 +93,10 @@ namespace AdaptiveControl
             ech = 10; ecl = -10;
             Kec = 6.0 / (ech - ecl);
             Kp = 1.8;
-            Ti = 5;
-            Td = 0.8;
-            T = 0.58;
-            PIDU = 0;
+            //Ti = 5;
+            //Td = 0.8;
+            //T = 0.58;
+            //PIDU = 0;
             Kp = 0;
             Ki = 0;
             Kd = 0;
@@ -124,11 +124,11 @@ namespace AdaptiveControl
             initChart();
             initTable();
         }
-        public double getControlValue(double y_set, double y_real)
+        public double getControlValue()
         {
             ek_2 = ek_1;
             ek_1 = ek;
-            ek = y_set - y_real;
+            ek = r - y;
             eck = ek - ek_1;
             //计算E
             E = (int)(Ke * (ek - (eh + el) / 2));
@@ -142,7 +142,7 @@ namespace AdaptiveControl
                 EC = 6;
             else if (EC < -6)
                 EC = -6;
-            double detU;
+          //  double detU;
             double kp0 = 0;
             double kd0 = 0;
             double ki0 = 0.0;
@@ -159,7 +159,7 @@ namespace AdaptiveControl
 
         public override double controller()
         {
-            controlU = getControlValue(r,y);
+            controlU = getControlValue();
             outputU = controlU;
             if (outputU >= 100)
             {
