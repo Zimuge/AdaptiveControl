@@ -15,8 +15,16 @@ namespace AdaptiveControl
         public AdaptiveControl()
         {
             InitializeComponent();
-        }
 
+            this.controlAlgorithm = new PidController(5.5, 100,
+                paraChart, controlChart, paraDataGridView, controlDataGridView);
+
+            controlAlgorithm.showData();
+            controlAlgorithm.showParameters();
+            controlAlgorithm.showParameters();
+            controlAlgorithm.showData();
+        }
+        
         private void AdaptiveControl_FormClosing(object sender, FormClosingEventArgs e)
         {
             //str_exit(Handle);

@@ -29,15 +29,11 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdaptiveControl));
             this.appName = new System.Windows.Forms.Label();
             this.myInfo = new System.Windows.Forms.Label();
@@ -53,15 +49,15 @@
             this.comboBoxAlgor = new System.Windows.Forms.ComboBox();
             this.controlChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.paraChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.paraDataGridView = new System.Windows.Forms.DataGridView();
+            this.controlDataGridView = new System.Windows.Forms.DataGridView();
             this.groupBoxConrolPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.controlChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.paraChart)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.paraDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.controlDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // appName
@@ -82,7 +78,7 @@
             this.myInfo.AutoSize = true;
             this.myInfo.Cursor = System.Windows.Forms.Cursors.No;
             this.myInfo.ImageAlign = System.Drawing.ContentAlignment.BottomLeft;
-            this.myInfo.Location = new System.Drawing.Point(912, 83);
+            this.myInfo.Location = new System.Drawing.Point(905, 420);
             this.myInfo.Name = "myInfo";
             this.myInfo.Size = new System.Drawing.Size(128, 16);
             this.myInfo.TabIndex = 3;
@@ -91,7 +87,7 @@
             // controlChartTitle
             // 
             this.controlChartTitle.AutoSize = true;
-            this.controlChartTitle.Location = new System.Drawing.Point(12, 65);
+            this.controlChartTitle.Location = new System.Drawing.Point(40, 65);
             this.controlChartTitle.Name = "controlChartTitle";
             this.controlChartTitle.Size = new System.Drawing.Size(72, 16);
             this.controlChartTitle.TabIndex = 6;
@@ -100,7 +96,7 @@
             // paraChartTitle
             // 
             this.paraChartTitle.AutoSize = true;
-            this.paraChartTitle.Location = new System.Drawing.Point(12, 407);
+            this.paraChartTitle.Location = new System.Drawing.Point(40, 407);
             this.paraChartTitle.Name = "paraChartTitle";
             this.paraChartTitle.Size = new System.Drawing.Size(72, 16);
             this.paraChartTitle.TabIndex = 7;
@@ -115,7 +111,7 @@
             this.groupBoxConrolPanel.Controls.Add(this.setBox);
             this.groupBoxConrolPanel.Controls.Add(this.label5);
             this.groupBoxConrolPanel.Controls.Add(this.comboBoxAlgor);
-            this.groupBoxConrolPanel.Location = new System.Drawing.Point(771, 102);
+            this.groupBoxConrolPanel.Location = new System.Drawing.Point(749, 439);
             this.groupBoxConrolPanel.Name = "groupBoxConrolPanel";
             this.groupBoxConrolPanel.Size = new System.Drawing.Size(269, 282);
             this.groupBoxConrolPanel.TabIndex = 10;
@@ -170,7 +166,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 122);
+            this.label5.Location = new System.Drawing.Point(6, 114);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(88, 16);
             this.label5.TabIndex = 2;
@@ -198,79 +194,50 @@
             // 
             // controlChart
             // 
+            chartArea1.AxisX.Interval = 10D;
+            chartArea1.AxisX.MajorGrid.Enabled = false;
+            chartArea1.AxisX.Maximum = 100D;
+            chartArea1.AxisX.Minimum = 0D;
+            chartArea1.AxisX.Title = "时间";
+            chartArea1.AxisY.Interval = 20D;
+            chartArea1.AxisY.Maximum = 100D;
+            chartArea1.AxisY.Minimum = 0D;
             chartArea1.Name = "ChartArea1";
             this.controlChart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.controlChart.Legends.Add(legend1);
+            this.controlChart.DataSource = this.paraChart.Titles;
+            legend2.Name = "Legend1";
+            this.controlChart.Legends.Add(legend2);
             this.controlChart.Location = new System.Drawing.Point(15, 84);
             this.controlChart.Name = "controlChart";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series1.Legend = "Legend1";
-            series1.Name = "setValue/r";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series2.Legend = "Legend1";
-            series2.Name = "controlValue/u";
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series3.Legend = "Legend1";
-            series3.Name = "outputValue/y";
-            this.controlChart.Series.Add(series1);
-            this.controlChart.Series.Add(series2);
-            this.controlChart.Series.Add(series3);
-            this.controlChart.Size = new System.Drawing.Size(696, 300);
+            this.controlChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
+            this.controlChart.Size = new System.Drawing.Size(583, 300);
             this.controlChart.TabIndex = 11;
             this.controlChart.Text = "chart1";
             // 
             // paraChart
             // 
+            chartArea2.AxisX.Interval = 10D;
+            chartArea2.AxisX.MajorGrid.Enabled = false;
+            chartArea2.AxisX.Maximum = 100D;
+            chartArea2.AxisX.Minimum = 0D;
+            chartArea2.AxisX.Title = "时间";
+            chartArea2.AxisY.Interval = 20D;
+            chartArea2.AxisY.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Stacked;
             chartArea2.Name = "ChartArea1";
             this.paraChart.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.paraChart.Legends.Add(legend2);
+            legend1.Name = "Legend1";
+            this.paraChart.Legends.Add(legend1);
             this.paraChart.Location = new System.Drawing.Point(12, 426);
             this.paraChart.Name = "paraChart";
-            this.paraChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series4.Legend = "Legend1";
-            series4.Name = "Kp";
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series5.Legend = "Legend1";
-            series5.Name = "Ki";
-            series6.ChartArea = "ChartArea1";
-            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series6.Legend = "Legend1";
-            series6.Name = "Kd";
-            this.paraChart.Series.Add(series4);
-            this.paraChart.Series.Add(series5);
-            this.paraChart.Series.Add(series6);
+            this.paraChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SemiTransparent;
             this.paraChart.Size = new System.Drawing.Size(586, 300);
             this.paraChart.TabIndex = 12;
             this.paraChart.Text = "chart1";
             // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(604, 468);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(479, 93);
-            this.dataGridView1.TabIndex = 13;
-            // 
-            // dataGridView2
-            // 
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(604, 642);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.Size = new System.Drawing.Size(479, 84);
-            this.dataGridView2.TabIndex = 14;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(601, 426);
+            this.label1.Location = new System.Drawing.Point(799, 95);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(104, 16);
             this.label1.TabIndex = 15;
@@ -279,11 +246,58 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(601, 602);
+            this.label2.Location = new System.Drawing.Point(799, 281);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(104, 16);
             this.label2.TabIndex = 16;
             this.label2.Text = "表2 实时参数";
+            // 
+            // paraDataGridView
+            // 
+            this.paraDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.paraDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.paraDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.paraDataGridView.GridColor = System.Drawing.SystemColors.MenuBar;
+            this.paraDataGridView.Location = new System.Drawing.Point(604, 300);
+            this.paraDataGridView.Name = "paraDataGridView";
+            this.paraDataGridView.ReadOnly = true;
+            this.paraDataGridView.RowHeadersVisible = false;
+            this.paraDataGridView.RowTemplate.Height = 30;
+            this.paraDataGridView.RowTemplate.ReadOnly = true;
+            this.paraDataGridView.Size = new System.Drawing.Size(480, 64);
+            this.paraDataGridView.TabIndex = 18;
+            // 
+            // controlDataGridView
+            // 
+            this.controlDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.controlDataGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.controlDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.controlDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.controlDataGridView.Location = new System.Drawing.Point(604, 114);
+            this.controlDataGridView.Name = "controlDataGridView";
+            this.controlDataGridView.RowHeadersVisible = false;
+            this.controlDataGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.controlDataGridView.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.controlDataGridView.RowTemplate.DefaultCellStyle.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.controlDataGridView.RowTemplate.Height = 30;
+            this.controlDataGridView.RowTemplate.ReadOnly = true;
+            this.controlDataGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.controlDataGridView.Size = new System.Drawing.Size(480, 71);
+            this.controlDataGridView.TabIndex = 19;
             // 
             // AdaptiveControl
             // 
@@ -291,10 +305,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1095, 733);
+            this.Controls.Add(this.controlDataGridView);
+            this.Controls.Add(this.paraDataGridView);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.dataGridView2);
-            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.paraChart);
             this.Controls.Add(this.controlChart);
             this.Controls.Add(this.groupBoxConrolPanel);
@@ -313,32 +327,35 @@
             this.groupBoxConrolPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.controlChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.paraChart)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.paraDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.controlDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.Label appName;
-        private System.Windows.Forms.Label myInfo;
-        private System.Windows.Forms.Label controlChartTitle;
-        private System.Windows.Forms.Label paraChartTitle;
-        private System.Windows.Forms.GroupBox groupBoxConrolPanel;
+
+        /************************************define the widget*************************/
+        private System.Windows.Forms.Label appName;// the name of app 
+        private System.Windows.Forms.Label myInfo;// my students's number
+        private System.Windows.Forms.Label controlChartTitle;// the title of control chart 
+        private System.Windows.Forms.Label paraChartTitle;// the title of parameter chart 
+        private System.Windows.Forms.GroupBox groupBoxConrolPanel;// the Panel 
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button buttonStop;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button buttonStart;
         private System.Windows.Forms.TextBox setBox;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox comboBoxAlgor;
-        private System.Windows.Forms.DataVisualization.Charting.Chart controlChart;
-        private System.Windows.Forms.DataVisualization.Charting.Chart paraChart;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.ComboBox comboBoxAlgor;// the box to select algorithm
+        private System.Windows.Forms.DataVisualization.Charting.Chart controlChart;// the control chart
+        private System.Windows.Forms.DataVisualization.Charting.Chart paraChart;// the parameters chart
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private ControlAlgorithm controlAlgorithm;
+        private System.Windows.Forms.DataGridView paraDataGridView;
+        private System.Windows.Forms.DataGridView controlDataGridView;
     }
 }
 
