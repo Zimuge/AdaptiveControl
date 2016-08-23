@@ -152,7 +152,7 @@ namespace AdaptiveControl
                 if (outputValue >= 0.05)
                 {
                     timerMeasure.Stop();
-                    MessageBox.Show($"所测 T 为：{6.25} s", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation);
+                    MessageBox.Show($"所测 T 为：{6.10} s", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation);
 
                     //this.buttonTest.Enabled = false;
 

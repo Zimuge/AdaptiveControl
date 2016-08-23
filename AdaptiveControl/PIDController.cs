@@ -39,7 +39,7 @@ namespace AdaptiveControl
             Error_K = 0;
             Error_K_1 = 0;
             Error_K_2 = 0;
-            Kp = 1.3; Ti = 82; Td = 11;
+            Kp = 1.2; Ti = 80; Td = 10;
 
             base.paraChart = paraChart;
             dataChart = controlChart;
