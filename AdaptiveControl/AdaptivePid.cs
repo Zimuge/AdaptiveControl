@@ -89,12 +89,16 @@ namespace AdaptiveControl
 
 
             ///
-            initChart();
-            initTable();
+            initParaChart();
+            initDataChart();
+
+
+            initParaTable();
+            initDataTable();
         }
 
 
-        public double getControlValue()
+        public override double getControlValue()
         {
             int i, j, k;
             //变量参数初始化
@@ -433,42 +437,9 @@ namespace AdaptiveControl
         /// interface
         /// </summary>
         /// <returns></returns>
-        public override double controller()
-        {
-            outputU = ControlU = getControlValue();
-            if (outputU > 100)
-            {
-                outputU = 100;
-            }
-            if (outputU < 0)
-            {
-                outputU = 0;
-            }
+        
 
-            return outputU;
-        }
-
-        public override void drawData()
-        {
-            //
-            // draw setValue
-            //
-            setDataChartAxisY(Math.Round(r, 4));
-            dataChart.Series[0].Points.Add(new DataPoint(Math.Round(spantime, 4),Math.Round(r, 4)));
-
-            //
-            // draw output value
-            //
-            setDataChartAxisY(Math.Round(y, 4));
-            dataChart.Series[1].Points.Add(new DataPoint(Math.Round(spantime, 4), Math.Round(y, 4)));
-
-            //
-            // draw control value
-            //
-            setDataChartAxisY(Math.Round(outputU, 4));
-            dataChart.Series[2].Points.Add(new DataPoint(Math.Round(spantime, 4), Math.Round(outputU, 4)));
-        }
-
+        
         public override void drawParameters()
         {
             setParaChartAxisY(Math.Round(tte[0], 4));
@@ -484,44 +455,30 @@ namespace AdaptiveControl
             paraChart.Series[3].Points.Add(new DataPoint(Math.Round(spantime, 4), Math.Round(tte[3], 4)));// draw b1
         }
 
-        public override void initChart()
+        public override void initParaChart()
         {
             paraChart.Series.Clear();
-            dataChart.Series.Clear();
+
 
             //
             // add the paraChart Series
             //
-            for (int i = 0; i < 4; i++)// add the paraChart Series
+            for (int i = 0; i < 4; i++) // add the paraChart Series
             {
-                paraChart.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series());// add series
-                paraChart.Series[i].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;// set the series type,pie or bar and etc
-                paraChart.Series[i].BorderWidth = 2;// set the line width
+                paraChart.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series()); // add series
+                paraChart.Series[i].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+                    // set the series type,pie or bar and etc
+                paraChart.Series[i].BorderWidth = 2; // set the line width
             }
 
-            
+
 
             //设置图例
             paraChart.Series[0].LegendText = "a0";
             paraChart.Series[1].LegendText = "a1";
             paraChart.Series[2].LegendText = "b1";
             paraChart.Series[3].LegendText = "b2";
-          //  paraChart.Legends[0].Position.Height = 20;
-
-            //
-            // add the dataChart Series
-            //
-            for (int i = 0; i < 3; i++)
-            {
-                dataChart.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series());// add series
-                dataChart.Series[i].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;// set the series type,pie or bar and etc
-                dataChart.Series[i].BorderWidth = 2;// set the line width
-            }
-
-            dataChart.Series[0].LegendText = "setValue/r";
-            dataChart.Series[1].LegendText = "outputValue/y";
-            dataChart.Series[2].LegendText = "controlValue/u";
-
+            //  paraChart.Legends[0].Position.Height = 20;
 
             paraChart.ChartAreas[0].AxisX.Maximum = 60;
             paraChart.ChartAreas[0].AxisX.Minimum = 0;
@@ -529,30 +486,25 @@ namespace AdaptiveControl
             paraChart.ChartAreas[0].AxisY.Maximum = 5;
             paraChart.ChartAreas[0].AxisY.Minimum = -5;
 
-            dataChart.ChartAreas[0].AxisX.Maximum = 60;
-            dataChart.ChartAreas[0].AxisX.Minimum = 0;
-
-            dataChart.ChartAreas[0].AxisY.Maximum = 100;
-            dataChart.ChartAreas[0].AxisY.Minimum = 0;
-
             paraChart.Series[0].Points.Add(0, 0);
-            dataChart.Series[0].Points.Add(0, 0);
         }
 
-        public override void initTable()
+
+       
+
+        public override void initParaTable()
         {
 
             paraTable.Columns.Clear();
             paraTable.Rows.Clear();
 
-            dataTable.Columns.Clear();
-            dataTable.Rows.Clear();
 
 
-        
+
+
             for (int i = 0; i < 4; i++)
             {
-                paraTable.Columns.Add(new DataGridViewTextBoxColumn());    
+                paraTable.Columns.Add(new DataGridViewTextBoxColumn());
                 paraTable.Columns[i].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
             paraTable.Columns[0].HeaderText = "a0";
@@ -560,46 +512,11 @@ namespace AdaptiveControl
             paraTable.Columns[2].HeaderText = "b1";
             paraTable.Columns[3].HeaderText = "b2";
 
-            
-         
-
-            for (int i = 0; i < 5; i++)// initialize the dataTable
-            {
-                base.dataTable.Columns.Add(new DataGridViewTextBoxColumn());
-                base.dataTable.Columns[i].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            }
-
-            dataTable.Columns[0].HeaderText = "对象延时/T";
-            base.dataTable.Columns[1].HeaderText = "控制量/u";
-            base.dataTable.Columns[2].HeaderText = "输出量/y";
-            base.dataTable.Columns[3].HeaderText = "误差/e";
-            dataTable.Columns[4].HeaderText = "超调量/σ";
         }
 
-        public override void showData()
-        {
-            dataTable.Rows[0].Cells[0].Value = Math.Round(T, 4);// show control period
-            dataTable.Rows[0].Cells[1].Value = Math.Round(ControlU, 4);// show ControlU
-            dataTable.Rows[0].Cells[2].Value = Math.Round(y, 4);// show output value
-
-            error = System.Math.Abs(r - y) / (r);// calculate error
-            string strError = (Math.Round(error, 4) * 100).ToString() + "%";
-
-            dataTable.Rows[0].Cells[3].Value = strError;// show error in percentage
-
-            if ((y - r) > 0)// calculate the overshoot
-            {
-                if (overshoot < error)
-                {
-                    overshoot = error;
-                }
-            }
-
-            string strOver = (Math.Round(overshoot, 4) * 100).ToString() + "%";
-
-            dataTable.Rows[0].Cells[4].Value = strOver;// show overshoot
-        }
-
+  
+        
+        
         public override void showParameters()
         {
             paraTable.Rows[0].Cells[0].Value = Math.Round(tte[0], 4);// show a0
@@ -643,8 +560,6 @@ namespace AdaptiveControl
        // private int nfg;
         private double[] ufk = new double[4];
         private double[] yfk = new double[4];
-        private double ControlU; // the control value the algorithm
-        private double outputU;
-        
+       
     }
 }

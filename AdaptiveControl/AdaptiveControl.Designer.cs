@@ -43,7 +43,7 @@
             this.paraChartTitle = new System.Windows.Forms.Label();
             this.groupBoxConrolPanel = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.buttonStop = new System.Windows.Forms.Button();
+            this.buttonTest = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.buttonStart = new System.Windows.Forms.Button();
             this.setBox = new System.Windows.Forms.TextBox();
@@ -107,7 +107,7 @@
             // groupBoxConrolPanel
             // 
             this.groupBoxConrolPanel.Controls.Add(this.label7);
-            this.groupBoxConrolPanel.Controls.Add(this.buttonStop);
+            this.groupBoxConrolPanel.Controls.Add(this.buttonTest);
             this.groupBoxConrolPanel.Controls.Add(this.label6);
             this.groupBoxConrolPanel.Controls.Add(this.buttonStart);
             this.groupBoxConrolPanel.Controls.Add(this.setBox);
@@ -129,15 +129,16 @@
             this.label7.TabIndex = 5;
             this.label7.Text = "操作：";
             // 
-            // buttonStop
+            // buttonTest
             // 
-            this.buttonStop.Location = new System.Drawing.Point(80, 239);
-            this.buttonStop.Margin = new System.Windows.Forms.Padding(4);
-            this.buttonStop.Name = "buttonStop";
-            this.buttonStop.Size = new System.Drawing.Size(77, 28);
-            this.buttonStop.TabIndex = 0;
-            this.buttonStop.Text = "暂停";
-            this.buttonStop.UseVisualStyleBackColor = true;
+            this.buttonTest.Location = new System.Drawing.Point(80, 239);
+            this.buttonTest.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonTest.Name = "buttonTest";
+            this.buttonTest.Size = new System.Drawing.Size(77, 28);
+            this.buttonTest.TabIndex = 0;
+            this.buttonTest.Text = "测参";
+            this.buttonTest.UseVisualStyleBackColor = true;
+            this.buttonTest.Click += new System.EventHandler(this.buttonTest_Click);
             // 
             // label6
             // 
@@ -165,6 +166,7 @@
             this.setBox.Name = "setBox";
             this.setBox.Size = new System.Drawing.Size(172, 26);
             this.setBox.TabIndex = 3;
+            this.setBox.TextChanged += new System.EventHandler(this.setBox_TextChanged);
             // 
             // label5
             // 
@@ -342,7 +344,7 @@
         private System.Windows.Forms.Label paraChartTitle;// the title of parameter chart 
         private System.Windows.Forms.GroupBox groupBoxConrolPanel;// the Panel 
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button buttonStop;
+        private System.Windows.Forms.Button buttonTest;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button buttonStart;
         private System.Windows.Forms.TextBox setBox;

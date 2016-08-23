@@ -21,8 +21,8 @@ namespace AdaptiveControl
         double Error_K;
         double Error_K_1;
         double Error_K_2;
-        double ControlU = 0;
-        double outputU = 0;
+        //double ControlU = 0;
+        //double outputU = 0;
 
 
 
@@ -39,7 +39,7 @@ namespace AdaptiveControl
             Error_K = 0;
             Error_K_1 = 0;
             Error_K_2 = 0;
-            Kp = 1.2; Ti = 80; Td = 10;
+            Kp = 1.3; Ti = 82; Td = 11;
 
             base.paraChart = paraChart;
             dataChart = controlChart;
@@ -53,15 +53,19 @@ namespace AdaptiveControl
             error = 0;
             overshoot = 0;
 
-            initChart();
-            initTable();
-            
+            initParaChart();
+            initDataChart();
+
+
+            initParaTable();
+            initDataTable();
+
         }
 
 
-        public double getControlValue()
+        public override double getControlValue()
         {
-            double u = ControlU;
+            double u = controlU;
             double detU;
             double y = base.y;
             double SetValue = base.r;
@@ -97,63 +101,34 @@ namespace AdaptiveControl
         //
         // get the control value
         //
-        public override double controller()
-        {
-            ControlU = getControlValue();
-            outputU = ControlU;
-            if(outputU >= 100)
-            {
-                outputU = 100;
-            }
-
-            if (outputU <= 0)
-            {
-                outputU = 0;
-            }
-            return outputU;
-        }
-
+        
 
         //
         // initiliaze the chart
         //
-        public override void initChart()
+        public override void initParaChart()
         {
-         
+
             //
             // clear the chart series
             //
             paraChart.Series.Clear();
-            dataChart.Series.Clear();
+           
 
             //
             // add the paraChart Series
             //
-            for (i = 0; i < 3; i++)// add the paraChart Series
+            for (i = 0; i < 3; i++) // add the paraChart Series
             {
-                paraChart.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series());// add series
-                paraChart.Series[i].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;// set the series type,pie or bar and etc
-                paraChart.Series[i].BorderWidth = 2;// set the line width
+                paraChart.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series()); // add series
+                paraChart.Series[i].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+                    // set the series type,pie or bar and etc
+                paraChart.Series[i].BorderWidth = 2; // set the line width
             }
 
             paraChart.Series[0].LegendText = "Kp";
             paraChart.Series[1].LegendText = "Ti";
             paraChart.Series[2].LegendText = "Td";
-
-            //
-            // add the dataChart Series
-            //
-            for (i = 0; i < 3; i++)
-            {
-                dataChart.Series.Add(new System.Windows.Forms.DataVisualization.Charting.Series());// add series
-                dataChart.Series[i].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;// set the series type,pie or bar and etc
-                dataChart.Series[i].BorderWidth = 2;// set the line width
-            }
-
-            dataChart.Series[0].LegendText = "setValue/r";
-            dataChart.Series[1].LegendText = "outputValue/y";
-            dataChart.Series[2].LegendText = "controlValue/u";
-
 
             paraChart.ChartAreas[0].AxisX.Maximum = 60;
             paraChart.ChartAreas[0].AxisX.Minimum = 0;
@@ -161,25 +136,19 @@ namespace AdaptiveControl
             paraChart.ChartAreas[0].AxisY.Maximum = 100;
             paraChart.ChartAreas[0].AxisY.Minimum = -20;
 
-            dataChart.ChartAreas[0].AxisX.Maximum = 60;
-            dataChart.ChartAreas[0].AxisX.Minimum = 0;
-
-            dataChart.ChartAreas[0].AxisY.Maximum = 100;
-            dataChart.ChartAreas[0].AxisY.Minimum = 0;
-
             paraChart.Series[0].Points.Add(0, 0);
-            dataChart.Series[0].Points.Add(0, 0);
         }
+        //
+        // add the dataChart Series
+        //
+       
 
-        public override void initTable()
+        public override void initParaTable()
         {
             paraTable.Columns.Clear();
             paraTable.Rows.Clear();
 
-            dataTable.Columns.Clear();
-            dataTable.Rows.Clear();
-
-            for (i = 0; i < 3; i++)// initialize the paraTable
+            for (i = 0; i < 3; i++) // initialize the paraTable
             {
                 base.paraTable.Columns.Add(new DataGridViewTextBoxColumn());
                 base.paraTable.Columns[i].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -188,47 +157,13 @@ namespace AdaptiveControl
             base.paraTable.Columns[0].HeaderText = "增益/Kp";
             base.paraTable.Columns[1].HeaderText = "积分时间/Ti";
             base.paraTable.Columns[2].HeaderText = "微分时间/Td";
-
-            for (i = 0; i < 5; i++)// initialize the dataTable
-            {
-                base.dataTable.Columns.Add(new DataGridViewTextBoxColumn());
-                base.dataTable.Columns[i].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            }
-
-            dataTable.Columns[0].HeaderText = "控制周期/T";
-            base.dataTable.Columns[1].HeaderText = "控制量/u";
-            base.dataTable.Columns[2].HeaderText = "输出量/y";
-            base.dataTable.Columns[3].HeaderText = "误差/e";
-            dataTable.Columns[4].HeaderText = "超调量/σ";
         }
 
+        
         //
         //draw data in the dataChart
         //
-        public override void drawData()
-        {
-            //
-            // dranw setValue
-            //
-                Debug.WriteLine($"{r}  #{y}  #{outputU} \n spantime{spantime} ");
-
-                
-                setDataChartAxisY(Math.Round(r, 4));
-                dataChart.Series[0].Points.Add(new DataPoint(Math.Round(spantime, 4),Math.Round(r, 4)));
-
-                //
-                // draw output value
-                //
-                setDataChartAxisY(Math.Round(y, 4));
-                dataChart.Series[1].Points.Add(new DataPoint(Math.Round(spantime, 4),Math.Round(y, 4)));
-
-                //
-                // draw control value
-                //
-                setDataChartAxisY(Math.Round(outputU, 4));
-                dataChart.Series[2].Points.Add(new DataPoint(Math.Round(spantime, 4),Math.Round(outputU, 4)));
-         }
-
+        
         //
         //draw parameters in the paraChart
         //
@@ -248,31 +183,8 @@ namespace AdaptiveControl
         //
         //show data in the dataTable
         //
-        public override void showData()
-        {
-            dataTable.Rows[0].Cells[0].Value = Math.Round(T, 4);// show control period
-            dataTable.Rows[0].Cells[1].Value = Math.Round(outputU, 4);// show ControlU
-            dataTable.Rows[0].Cells[2].Value = Math.Round(y, 4);// show output value
-
-            error = System.Math.Abs(r - y) / (r);// calculate error
-            string strError = (Math.Round(error, 4) * 100).ToString() + "%";
-
-            dataTable.Rows[0].Cells[3].Value = strError;// show error in percentage
-
-            if ((y - r) > 0)// calculate the overshoot
-            {
-                if (overshoot < error)
-                {
-                    overshoot = error;
-                }
-            }
-
-            string strOver = (Math.Round(overshoot, 4) * 100).ToString() + "%";
-
-            dataTable.Rows[0].Cells[4].Value = strOver;// show overshoot
-
-        }
-
+        
+        
         //
         //show parameters in the paraTable
         //
